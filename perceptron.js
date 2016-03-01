@@ -5,6 +5,8 @@ function Perceptron(){
     this.reseauDeSortie = [];
 }
 
+Perceptron.prototype.changerTauxApprentissage = function(newRate) {this.tauxApprentissage = newRate;}
+
 Perceptron.prototype.initialiserReseauxNeuronaux = function (nbNeuronesEnEntree, nbNeuronesEnSortie) {
     for (var i = 0; i < nbNeuronesEnEntree; ++i){
         this.reseauDEntree[i] = [];
@@ -21,16 +23,6 @@ Perceptron.prototype.initialiserReseauxNeuronauxSortie = function (nbNeuronesEnS
         this.reseauDeSortie[i] = 1;
     }
 }
-function getPoids(poids, t, A, O, E){
-    poids += t * (A - O) * E;
-    return poids;
-}
-
-function getSortieAttendue(poids){
-    if(poids != 0)	return 1;
-    else			return 0;
-}
-
 
 Perceptron.prototype.apprendre = function (tableDePixels, nombreApprendre){
 
