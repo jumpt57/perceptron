@@ -1,198 +1,137 @@
 <html>
 <head>
-    <script src="perceptron.js"></script>
     <meta charset="UTF-8">
-    <script>
-
-        var perceptron = new Perceptron();
-        /*--------  Constants ------*/
-        var PIXEL_SIZE = 30; //pixels
-
-        var GRID_WIDTH = 0;
-        var GRID_HEIGHT = 0;
-
-        var OUTPUT_COUNT = 6;
-
-        var SEUIL = 1;
-
-        /*--------  Variables ------*/
-        var pixels = [];
-
-        var mousePressed = false;
-        var mousePixelIndex = -1;
-        var canvas = null;
-
-        /*--------  Initialization ------*/
-        function init() {
-            canvas = document.getElementById("canvas");
-            GRID_WIDTH = Math.floor(canvas.width/PIXEL_SIZE);
-            GRID_HEIGHT = Math.floor(canvas.height/PIXEL_SIZE);
-
-            perceptron.initialiserReseauxNeuronaux(GRID_WIDTH * GRID_HEIGHT, 10);
-
-            resetCanvas();
-
-            canvas.addEventListener("click", function(e) {
-                var mousePoint = mouseCanvasPosition(e);
-                togglePixelAtPoint(mousePoint);
-                drawPixels();
-            });
-
-            canvas.addEventListener("mousedown", function() {
-                mousePressed = true;
-            }, false);
-            canvas.addEventListener("mouseup", function() {
-                mousePressed = false;
-            }, false);
-
-            canvas.addEventListener("mousemove", function(e) {
-                if(mousePressed) {
-                    var mousePoint = mouseCanvasPosition(e);
-                    var pixelIndex = pixelIndexAtPoint(e);
-                    if(pixelIndex != mousePixelIndex) {
-                        setPixelValueAtPoint(mousePoint, true);
-                        drawPixels();
-                        mousePixelIndex = pixelIndex;
-                    }
-                }
-            })
-        }
-
-        /*--------  Interactions  ------*/
-        function learnClicked() {
-            var learnedNumber = parseInt(getInputElement().value);
-            learn(learnedNumber);
-            processClicked();
-        }
-
-        function processClicked() {
-            processedNumbers = process();
-
-            showProcessedNumbers(processedNumbers);
-        }
-
-        function showProcessedNumbers(processedNumbers) {
-            var result = "";
-            for(var i = 0; i < processedNumbers.length; i++) {
-                result += processedNumbers[i].toString() + ",";
-            }
-            if(result.length > 0) result = result.substring(0, result.length-1);
-            getOutputElement().value = result;
-        }
-
-        function getInputElement(){
-            return document.getElementById("inputNumber");
-        }
-
-        function getOutputElement(){
-            return document.getElementById("outputNumber");
-        }
-
-        /*--------  Learn and process  ------*/
-        function learn(number) {
-            perceptron.apprendre(convertirPixelEnTable(), number);
-        }
-
-        function process() {
-            return perceptron.chercher(convertirPixelEnTable());
-        }
-
-        function convertirPixelEnTable(){
-            var linearPixels = [];
-            for (var i = 0; i < pixels.length; i++) {
-                for (var j = 0; j < pixels[i].length; j++) {
-                    linearPixels[i * pixels[i].length + j] = pixels[i][j];
-                }
-            }
-
-            return linearPixels;
-        }
-
-        function foreachPixel(f) {
-            for(var x = 0; x < GRID_WIDTH; x++) {
-                for(var y = 0; y < GRID_HEIGHT; y++) {
-                    f(x, y, pixels[x][y]);
-                }
-            }
-        }
-
-        /*--------  Canvas helpers  ------*/
-        function mouseCanvasPosition(e) {
-            var rect = canvas.getBoundingClientRect();
-            return {
-                x: e.clientX - rect.left,
-                y: e.clientY - rect.top
-            };
-        }
-
-        function pixelIndexAtPoint(point) {
-            var pixelIndex = -1;
-            var x = Math.floor(point.x/PIXEL_SIZE);
-            var y = Math.floor(point.y/PIXEL_SIZE);
-            if(x < GRID_WIDTH && y < GRID_HEIGHT) {
-                pixelIndex = y * GRID_WIDTH + x;
-            }
-            return pixelIndex;
-        }
-
-        function togglePixelAtPoint(point) {
-            var x = Math.floor(point.x/PIXEL_SIZE);
-            var y = Math.floor(point.y/PIXEL_SIZE);
-            if(x < GRID_WIDTH && y < GRID_HEIGHT) {
-                pixels[x][y] = !pixels[x][y];
-            }
-        }
-
-        function setPixelValueAtPoint(point, value) {
-            var x = Math.floor(point.x/PIXEL_SIZE);
-            var y = Math.floor(point.y/PIXEL_SIZE);
-            if(x < GRID_WIDTH && y < GRID_HEIGHT) {
-                pixels[x][y] = value;
-            }
-        }
-
-        function resetCanvas() {
-            resetPixels();
-            drawPixels();
-        }
-
-        function resetPixels() {
-            for(var x = 0; x < GRID_WIDTH; x++) {
-                pixels[x] = [];
-                for(var y = 0; y < GRID_HEIGHT; y++) {
-                    pixels[x][y] = false;
-                }
-            }
-        }
-
-        function drawPixels() {
-            var canvas = document.getElementById("canvas");
-            var context = canvas.getContext("2d");
-
-            for(var y = 0; y < GRID_HEIGHT; y++) {
-                for(var x = 0; x < GRID_WIDTH; x++) {
-                    context.beginPath();
-                    context.rect(x*PIXEL_SIZE, y*PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE);
-                    context.fillStyle = pixels[x][y] ? '#2D2' : '#555';
-                    context.fill();
-                    context.lineWidth = 1;
-                    context.strokeStyle = '#000';
-                    context.stroke();
-                }
-            }
-        }
-
-    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body onLoad="init();">
-<canvas id="canvas" width="300" height="400" style="float:left">
-    alternate content
-</canvas>
-<div style="margin-left:50px;float:left">
-    <input type="button" value="Reset canvas" onclick="resetCanvas()"/><br/>
-    <br/>
-    <input type="text" id="inputNumber"><input type="button" value="Learn" onclick="learnClicked()"/><br/>
-    <input type="text" id="outputNumber"><input type="button" value="Process" onclick="processClicked()"/><br/>
+
+<div class="container">
+
+    <h3><i class="medium material-icons">insert_chart</i><span style="position: absolute;margin-top: 8px;">Perceptron</span></h3>
+
+    <div class="card">
+        <div class="card-image waves-block waves-light">
+
+            <div style="padding: 20px;">
+
+                <div class="row">
+                    <div class="col m5 s12">
+                        <canvas id="canvas" width="450" height="550">
+                            alternate content
+                        </canvas>
+                    </div>
+
+                    <div class="col m7 s12">
+
+                        <div class="input-field col m9 s9">
+                            <i class="material-icons prefix">mode_edit</i>
+                            <input id="inputNumber" type="text" class="validate">
+                            <label for="inputNumber">Input</label>
+                        </div>
+                        <div class="col m2 s2">
+                            <a class="waves-effect waves-light btn btn-override" onclick="learnClicked()">Learn....</a>
+                        </div>
+
+                        <div class="input-field col m9 s9">
+                            <i class="material-icons prefix">mode_edit</i>
+                            <input id="outputNumber" type="text" class="validate">
+                            <label for="outputNumber">Output</label>
+                        </div>
+                        <div class="col m2 s2">
+                            <a class="waves-effect waves-light btn btn-override" onclick="processClicked()">Process</a>
+                        </div>
+
+                        <div class="col m12 s12">
+                            <form action="#">
+                                <p class="range-field">
+                                    <label for="sliderGrille">Taille de la grille</label>
+                                    <input type="range" id="sliderGrille" min="30" max="60" />
+                                </p>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-content">
+            <div class="row">
+                <div class="col m2 s1">
+                    <a class="waves-effect waves-light btn" onclick="resetCanvas()"><i class="large material-icons right">replay</i>Reset</a>
+                </div>
+                <div class="col m1 offset-m9 s1 offset-s8">
+                    <a class="waves-effect waves-light btn activator red"><i class="large material-icons">live_help</i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Documentation -->
+        <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">Documentation<i class="material-icons right">close</i></span>
+
+            <h3>Description de l'applicatif</h3>
+            <p>
+                Le perceptron est un réseau de neurone simple.
+                Grâce a la formule <kbd><var> P = P + t * (A – O) * E </var></kbd> nous avons réalisé le perceptron basé sur un apprentissage <i>supervisé</i>.<br>
+                Pour réaliser le perceptron, nous sommes partis d'une base graphique correspondant à une grille de pixels en 3 dimensions:</p>
+            <p>
+                - axe des ordonnées<br>
+                - axe des abcisses<br>
+                - chiffre à apprendre de 1 à 9 <br/>
+            <p/>
+
+            <p>
+                Chaque pixel contient un poids qui est calculé avec la formule précédemment écrite. Ce poids diffère en fonction du chiffre à faire apprendre.
+            </p>
+
+            <h3>Rôle des fichiers dans le projet</h3>
+
+            <p>"initialisationAffichageCanvas.js" affiche le canvas représentant la grille numérique.</p>
+            <p>"perceptron.js" permet de créer un reseau de neurone simple prenant en compte une couche d'entrée et de sortie et connectées ensembles.
+                Dans ce fichier se trouve l'algorithme correspondant à l'apprentissage des chiffres de 1 à 9 ainsi que l'algorithme permettant de chercher et reconnaitre ces chiffres grâce a la formule.</p>
+
+            <table class="table table-condensed">
+                <thead>
+                <tr>
+                    <h4><th>Librairies</th>
+                        <th>Description</th>
+                        <th>Place</th></h4>
+                </tr>
+                </thead>
+
+                <tr><td>Jquery</td><td>permet d'utiliser les librairies Chart et Bootstrap</td><td>/webroot/js/jquery/</td></tr>
+                <tr><td>Chart (en Bars)</td><td>affiche un graphe en Bars correspondant a chaque chiffre appris en fonction du poids</td><td>/webroot/js/canvas/</td></tr>
+                <tr><td>Boostrap</td><td>un visuel plus agréable pour l'utilisateur</td><td>javascript: /webroot/js/bootstrap/ </br>css: /webroot/css/</td></tr>
+                <tr><td>AngularJS</td><td>permet d'afficher ou cacher les outils</td><td>Lien</td></tr>
+            </table>
+
+            <h3>Evolution possible</h3>
+
+            <p>L'enregistrement d'un halo sur les pixels allumés consistant à leur renseigner un poids faible afin d'améliorer le processus de reconnaissance quelque soit la forme du chiffre.</p>
+            <p>Rendre paramétrable via l'IHM le nombre de pixels du tableau numérique.</p>
+            <p>Ajouter une couche en plus caché.
+                Enregistrer un chiffre en calculant une suite des pixels allumés à partir d’un pixel choisit.
+                Ainsi, on établit une suite logique des fils allumés (pixels adjacents) en leur attribuant un poids différent à chaque fois en fonction de leur position par rapport au pixel mère.
+            </p>
+
+        </div>
+    </div>
+
 </div>
+
+<script src="perceptron.js"></script>
+<script src="app.js"></script>
+<script src="http://code.jquery.com/jquery-2.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+
+<style>
+    .btn-override{
+        position: absolute;
+        margin-top: 25px;
+    }
+</style>
+
 </body>
 </html>
