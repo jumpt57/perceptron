@@ -5,6 +5,8 @@ function Perceptron(){
     this.reseauDeSortie = [];
 }
 
+Perceptron.prototype.getLearningRate = function() {return this.tauxApprentissage;};
+
 Perceptron.prototype.changerTauxApprentissage = function(newRate) {this.tauxApprentissage = newRate;}
 
 Perceptron.prototype.initialiserReseauxNeuronaux = function (nbNeuronesEnEntree, nbNeuronesEnSortie) {
@@ -22,7 +24,7 @@ Perceptron.prototype.initialiserReseauxNeuronauxSortie = function (nbNeuronesEnS
     for(var i = 0; i < nbNeuronesEnSortie; ++i){
         this.reseauDeSortie[i] = 1;
     }
-}
+};
 
 Perceptron.prototype.apprendre = function (tableDePixels, nombreApprendre){
 

@@ -26,6 +26,7 @@
      perceptron.initialiserReseauxNeuronaux(GRID_WIDTH * GRID_HEIGHT, 10);
 
      resetCanvas();
+     showLearningRate();
 
      canvas.addEventListener("click", function(e) {
          var mousePoint = mouseCanvasPosition(e);
@@ -69,6 +70,7 @@
  function changeRateClicked() {
      var newRate = parseFloat(getRateElement().value);
      changeLearningRate(newRate);
+     showLearningRate();
  }
 
  function showProcessedNumbers(processedNumbers) {
@@ -79,6 +81,11 @@
      if (result.length > 0) result = result.substring(0, result.length - 1);
      getOutputElement().value = result;
  }
+
+  function showLearningRate() {
+    var currentRateText = "Current Rate : " + perceptron.getLearningRate();
+    getRateElement().value = currentRateText;
+}
 
  function getInputElement() {
      return document.getElementById("inputNumber");
@@ -123,8 +130,8 @@
  function changeLearningRate(newRate) {
      perceptron.changerTauxApprentissage(newRate);
  }
- 
-  /*--------  Canvas helpers  ------*/
+
+ /*--------  Canvas helpers  ------*/
  function mouseCanvasPosition(e) {
      var rect = canvas.getBoundingClientRect();
      return {
