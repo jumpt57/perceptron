@@ -35,7 +35,7 @@
      resetCanvas();
      showLearningRate();
 	 
-	 thicknessSlider  = document.getElementById('thickness_slider');
+	thicknessSlider  = document.getElementById('thickness_slider');
 	lsdmodeSwitch = document.getElementById('lsdmode_switch');
 	lsdmodeSwitch.checked = false;
 	
@@ -269,5 +269,11 @@ function drawPixels() {
 			context.strokeStyle = '#000';
 			context.stroke();
 		}
+	}
+	
+	if(LSD_MODE){
+		document.body.style.background='rgb(' + (Math.floor(Math.random() * 255) + 1) +', ' + (Math.floor(Math.random() * 255) + 1) + ', ' + (Math.floor(Math.random() * 255) + 1)+')';
+	} else {
+		document.body.style.background="white";
 	}
 }
