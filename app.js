@@ -9,6 +9,10 @@
  var OUTPUT_COUNT = 6;
 
  var SEUIL = 1;
+ 
+ var VALUE = 1.0;
+ 
+ var LSD_MODE = false;
 
  /*--------  Variables ------*/
  var pixels = [];
@@ -16,6 +20,8 @@
  var mousePressed = false;
  var mousePixelIndex = -1;
  var canvas = null;
+ 
+ var thicknessSlider = null;
 
  /*--------  Initialization ------*/
  function init() {
@@ -27,31 +33,42 @@
 
      resetCanvas();
      showLearningRate();
+	 
+	 thicknessSlider  = document.getElementById('thickness_slider');
 
-     canvas.addEventListener("click", function(e) {
-         var mousePoint = mouseCanvasPosition(e);
-         togglePixelAtPoint(mousePoint);
-         drawPixels();
-     });
+	canvas.addEventListener("click", function(e) {
+		var mousePoint = mouseCanvasPosition(e);
+		setPixelValueAtPoint(mousePoint, VALUE);
+		drawPixels();
+	});
 
-     canvas.addEventListener("mousedown", function() {
-         mousePressed = true;
-     }, false);
-     canvas.addEventListener("mouseup", function() {
-         mousePressed = false;
-     }, false);
+	canvas.addEventListener("mousedown", function() {
+		mousePressed = true;
+	}, false);
+	canvas.addEventListener("mouseup", function() {
+		mousePressed = false;
+	}, false);
 
-     canvas.addEventListener("mousemove", function(e) {
-         if (mousePressed) {
-             var mousePoint = mouseCanvasPosition(e);
-             var pixelIndex = pixelIndexAtPoint(mousePoint);
-             if (pixelIndex != mousePixelIndex) {
-                 setPixelValueAtPoint(mousePoint, true);
-                 drawPixels();
-                 mousePixelIndex = pixelIndex;
-             }
-         }
-     })
+	canvas.addEventListener("mousemove", function(e) {
+		if(mousePressed) {
+			var mousePoint = mouseCanvasPosition(e);
+			var pixelIndex = pixelIndexAtPoint(mousePoint);
+			if(pixelIndex != mousePixelIndex) {
+				setPixelValueAtPoint(mousePoint, VALUE);
+				drawPixels();
+				mousePixelIndex = pixelIndex;
+			}
+		}
+	});
+	
+	thicknessSlider.min = 0;
+	thicknessSlider.max = Math.ceil(GRID_WIDTH / 20);
+	thicknessSlider.step = 1;
+	thicknessSlider.value = 0;
+	thicknessSlider.onchange = function() {
+		TICKNESS = thicknessSlider.value;
+		document.getElementById('thickness_display').innerHTML = thicknessSlider.value;
+	};
  }
 
  /*--------  Interactions  ------*/
@@ -162,7 +179,7 @@
      var x = Math.floor(point.x / PIXEL_SIZE);
      var y = Math.floor(point.y / PIXEL_SIZE);
      if (x < GRID_WIDTH && y < GRID_HEIGHT) {
-         pixels[x][y] = value;
+		 drawNeighboursPixels(x, y, value);
      }
  }
 
@@ -180,19 +197,70 @@
      }
  }
 
- function drawPixels() {
-     var canvas = document.getElementById("canvas");
-     var context = canvas.getContext("2d");
+ this.drawNeighboursPixels = function(x, y, value) {
 
-     for (var y = 0; y < GRID_HEIGHT; y++) {
-         for (var x = 0; x < GRID_WIDTH; x++) {
-             context.beginPath();
-             context.rect(x * PIXEL_SIZE, y * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE);
-             context.fillStyle = pixels[x][y] ? '#2D2' : '#555';
-             context.fill();
-             context.lineWidth = 1;
-             context.strokeStyle = '#000';
-             context.stroke();
-         }
-     }
- }
+	var writeMode = true;
+
+	if (GRID_WIDTH == 0)
+		this.resetCanvas();
+
+	var coeffValue = value / (2 * TICKNESS);
+
+	pixels[x][y] = writeMode ? value : 0.0;
+
+	for (var x2 = x - TICKNESS, xMax = x + TICKNESS; x2 < xMax; x2++) {
+		if (x2 < 0 || x2 >= GRID_WIDTH)
+			continue;
+
+		for (var y2 = y - TICKNESS, yMax = y + TICKNESS; y2 < yMax; y2++) {
+			if (y2 < 0 || y2 >= GRID_HEIGHT)
+				continue;
+
+			var deltaX = x2 - x;
+			var deltaY = y2 - y;
+			var dist = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+			if (dist > TICKNESS)
+				continue;
+
+			if (writeMode) {
+				var reviewedValue = value - (dist * coeffValue);
+				if (reviewedValue > pixels[x2][y2])
+					pixels[x2][y2] = pixels[x2][y2] + reviewedValue;
+			} else {
+				pixels[x2][y2] = 0;
+			}
+		}
+	}
+};
+
+ 
+function drawPixels() {
+	var canvas = document.getElementById("canvas");
+	var context = canvas.getContext("2d");
+	context.clearRect(0, 0, canvas.width, canvas.height);
+	context.fillStyle = '#555';
+
+	context.fill();
+
+	var alpha;
+	for(var y = 0; y < GRID_HEIGHT; y++) {
+		for(var x = 0; x < GRID_WIDTH; x++) {
+			context.beginPath();
+			context.rect(x*PIXEL_SIZE, y*PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE);
+			alpha = 1 - (1 - pixels[x][y]) * 1.6;
+			var r = LSD_MODE?(Math.floor(Math.random() * 255) + 1):35;
+			var g = LSD_MODE?(Math.floor(Math.random() * 255) + 1):255;
+			var b = LSD_MODE?(Math.floor(Math.random() * 255) + 1):35;
+			//context.fillStyle = 'rgba(35, 255, 35, ' + alpha + ')';
+			context.fillStyle = 'rgba('+r+', '+g+', '+b+', ' + alpha + ')';
+			if (this.pixels[x][y] < 0.5){
+				context.fillStyle = '#999';
+			}
+			context.fill();
+			context.lineWidth = 1;
+			context.strokeStyle = '#000';
+			context.stroke();
+		}
+	}
+}
