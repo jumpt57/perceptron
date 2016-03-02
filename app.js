@@ -44,7 +44,7 @@
      canvas.addEventListener("mousemove", function(e) {
          if (mousePressed) {
              var mousePoint = mouseCanvasPosition(e);
-             var pixelIndex = pixelIndexAtPoint(e);
+             var pixelIndex = pixelIndexAtPoint(mousePoint);
              if (pixelIndex != mousePixelIndex) {
                  setPixelValueAtPoint(mousePoint, true);
                  drawPixels();
@@ -83,7 +83,7 @@
  }
 
   function showLearningRate() {
-    var currentRateText = "Current Rate : " + perceptron.getLearningRate();
+    var currentRateText = perceptron.getLearningRate();
     getRateElement().value = currentRateText;
 }
 
