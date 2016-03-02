@@ -8,12 +8,12 @@
 
 <div class="container">
 
-    <h3><i class="medium material-icons">insert_chart</i><span style="position: absolute;margin-top: 8px;">Perceptron</span></h3>
+    <h3 style="margin: 0px;"><i class="medium material-icons">insert_chart</i><span style="position: absolute;margin-top: 8px;">Perceptron</span></h3>
 
     <div class="card">
         <div class="card-image waves-block waves-light">
 
-            <div style="padding: 20px;">
+            <div style="padding: 20px 20px 0px;">
 
                 <div class="row">
                     <div class="col m5 s12">
@@ -22,11 +22,11 @@
                         </canvas>
                     </div>
 
-                    <div class="col m5 offset-m1 s10 offset-s1">
+                    <div class="col m5 offset-m1 s10">
 
                         <div class="input-field col m9 s9">
                             <i class="material-icons prefix">mode_edit</i>
-                            <input id="inputNumber" type="text" class="validate">
+                            <input placeholder="" id="inputNumber" type="text" class="validate">
                             <label for="inputNumber">Input</label>
                         </div>
                         <div class="col m2 s2">
@@ -35,7 +35,7 @@
 
                         <div class="input-field col m9 s9">
                             <i class="material-icons prefix">mode_edit</i>
-                            <input id="outputNumber" type="text" class="validate">
+                            <input placeholder="" id="outputNumber" type="text" class="validate">
                             <label for="outputNumber">Output</label>
                         </div>
                         <div class="col m2 s2">
@@ -45,7 +45,7 @@
 
                         <div class="input-field col m9 s9">
                             <i class="material-icons prefix">mode_edit</i>
-                            <input placeholder="Placeholder" id="inputLearningRate" type="text" class="validate">
+                            <input placeholder="" id="inputLearningRate" type="text" class="validate">
                             <label for="inputLearningRate">Taux d'apprentissage</label>
                         </div>
                         <div class="col m2 s2">
@@ -55,9 +55,10 @@
                         <div class="col m12 s12">
                             <form action="#">
                                 <p class="range-field">
-                                    <label for="sliderGrille">Taille de la grille</label>
-                                    <input type="range" id="sliderGrille" min="30" max="60" />
+                                    <label for="sizeGridSlider">Taille de la grille</label>
+                                    <input type="range" id="sizeGridSlider" min="15" max="150" />
                                 </p>
+
                                 <p class="range-field">
                                     <label for="thickness_slider">Grosseur du dessin:</label>
                                     <input type="range" id="thickness_slider" min="30" max="60"/>
@@ -81,12 +82,12 @@
             </div>
         </div>
 
-        <div class="card-content">
-            <div class="row">
-                <div class="col m2 s1">
+        <div class="card-content" style="padding: 10px; margin: -10px;">
+            <div class="row" style="padding-bottom: 10px;">
+                <div class="col m2 offset-m1 s1 offset-s1">
                     <a class="waves-effect waves-light btn" onclick="resetCanvas()"><i class="large material-icons right">replay</i>Reset</a>
                 </div>
-                <div class="col m1 offset-m9 s1 offset-s8">
+                <div class="col m1 offset-m7 s1 offset-s7">
                     <a class="waves-effect waves-light btn activator red"><i class="large material-icons">live_help</i></a>
                 </div>
             </div>
@@ -94,7 +95,7 @@
 
         <!-- Documentation -->
         <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">Documentation<i class="material-icons right">close</i></span>
+            <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i></span>
 
             <h3>Description de l'applicatif</h3>
             <p>
