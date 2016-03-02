@@ -42,38 +42,39 @@
                             <a class="waves-effect waves-light btn btn-override" onclick="processClicked()">Process</a>
                         </div>
 
-                         <div class="input-field col m9 s9">
+
+                        <div class="input-field col m9 s9">
                             <i class="material-icons prefix">mode_edit</i>
-                            <input id="inputLearningRate" type="text" class="validate">
-							<label for="inputLearningRate">Taux d'apprentissage</label>
+                            <input placeholder="Placeholder" id="inputLearningRate" type="text" class="validate">
+                            <label for="inputLearningRate">Taux d'apprentissage</label>
                         </div>
                         <div class="col m2 s2">
                             <a class="waves-effect waves-light btn btn-override" onclick="changeRateClicked()">Change Rate</a>
                         </div>
 
-						<div class="col m12 s12">
-							<form action="#">
-								<p class="range-field">
-									<label for="sliderGrille">Taille de la grille</label>
-									<input type="range" id="sliderGrille" min="30" max="60" />
-								</p>
-								<p class="range-field">
-								    <label for="thickness_slider">Grosseur du dessin:</label>
-									<input type="range" id="thickness_slider" min="30" max="60"/>
-								</p>
-							</form>
-						</div>
-						<div class="col m12 s12">
-							<label for="lsdmode">LSD Mode :</label>
-							<div id="lsdmode" class="switch">
-								<label>
-									Off
-									<input id="lsdmode_switch" type="checkbox">
-									<span class="lever"></span>
-									On
-								</label>
-							</div>
-						</div>
+                        <div class="col m12 s12">
+                            <form action="#">
+                                <p class="range-field">
+                                    <label for="sliderGrille">Taille de la grille</label>
+                                    <input type="range" id="sliderGrille" min="30" max="60" />
+                                </p>
+                                <p class="range-field">
+                                    <label for="thickness_slider">Grosseur du dessin:</label>
+                                    <input type="range" id="thickness_slider" min="30" max="60"/>
+                                </p>
+                            </form>
+                        </div>
+                        <div class="col m12 s12">
+                            <label for="lsdmode">LSD Mode :</label>
+                            <div id="lsdmode" class="switch">
+                                <label>
+                                    Off
+                                    <input id="lsdmode_switch" type="checkbox">
+                                    <span class="lever"></span>
+                                    On
+                                </label>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
