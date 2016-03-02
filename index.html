@@ -51,18 +51,29 @@
                             <a class="waves-effect waves-light btn btn-override" onclick="changeRateClicked()">Change Rate</a>
                         </div>
 
-                        <div class="col m12 s12">
-                            <form action="#">
-                                <p class="range-field">
-                                    <label for="sliderGrille">Taille de la grille</label>
-                                    <input type="range" id="sliderGrille" min="30" max="60" />
-                                </p>
+						<div class="col m12 s12">
+							<form action="#">
 								<p class="range-field">
-								    <label for="thickness_display">Grosseur du dessin:</label>
+									<label for="sliderGrille">Taille de la grille</label>
+									<input type="range" id="sliderGrille" min="30" max="60" />
+								</p>
+								<p class="range-field">
+									<label for="thickness_display">Grosseur du dessin:</label>
 									<input type="range" id="thickness_slider" min="30" max="60"/>
 								</p>
-                            </form>
-                        </div>
+							</form>
+						</div>
+						<div class="col m12 s12">
+							<label for="lsdmode">LSD Mode :</label>
+							<div id="lsdmode" class="switch">
+								<label>
+									Off
+									<input id="lsdmode_switch" type="checkbox">
+									<span class="lever"></span>
+									On
+								</label>
+							</div>
+						</div>
 
                     </div>
                 </div>

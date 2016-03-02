@@ -10,8 +10,9 @@
 
  var SEUIL = 1;
  
- var VALUE = 1.0;
  
+ var VALUE = 1.0;
+ var TICKNESS = 0;
  var LSD_MODE = false;
 
  /*--------  Variables ------*/
@@ -35,7 +36,7 @@
      showLearningRate();
 	 
 	 thicknessSlider  = document.getElementById('thickness_slider');
-
+	lsdmodeSwitch = document.getElementById('lsdmode_switch');
 	canvas.addEventListener("click", function(e) {
 		var mousePoint = mouseCanvasPosition(e);
 		setPixelValueAtPoint(mousePoint, VALUE);
@@ -67,7 +68,11 @@
 	thicknessSlider.value = 0;
 	thicknessSlider.onchange = function() {
 		TICKNESS = thicknessSlider.value;
-		document.getElementById('thickness_display').innerHTML = thicknessSlider.value;
+		document.getElementById('thickness_slider').innerHTML = thicknessSlider.value;
+	};
+	
+	lsdmodeSwitch.onchange = function() {
+		LSD_MODE = lsdmodeSwitch.checked;
 	};
  }
 
