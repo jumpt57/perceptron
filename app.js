@@ -37,6 +37,8 @@
 	 
 	 thicknessSlider  = document.getElementById('thickness_slider');
 	lsdmodeSwitch = document.getElementById('lsdmode_switch');
+	lsdmodeSwitch.checked = false;
+	
 	canvas.addEventListener("click", function(e) {
 		var mousePoint = mouseCanvasPosition(e);
 		setPixelValueAtPoint(mousePoint, VALUE);
