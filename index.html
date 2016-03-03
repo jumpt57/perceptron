@@ -8,7 +8,7 @@
 
 <div class="container">
 
-    <h3 style="margin: 0px;"><i class="medium material-icons">insert_chart</i><span style="position: absolute;margin-top: 8px;">Perceptron</span></h3>
+    <h3 style="margin: 10px;"><i class="medium material-icons">insert_chart</i><span style="position: absolute;margin-top: 8px;">Perceptron</span></h3>
 
     <div class="card">
         <div class="card-image waves-block waves-light">
@@ -55,12 +55,12 @@
                         <div class="col m12 s12">
                             <form action="#">
                                 <p class="range-field">
-                                    <label for="sizeGridSlider">Taille de la grille</label>
+                                    <label for="sizeGridSlider">Taille des pixels</label>
                                     <input type="range" id="sizeGridSlider" min="15" max="150" />
                                 </p>
 
                                 <p class="range-field">
-                                    <label for="thickness_slider">Grosseur du dessin:</label>
+                                    <label for="thickness_slider">Précision du pinceau</label>
                                     <input type="range" id="thickness_slider" min="30" max="60"/>
                                 </p>
                             </form>
@@ -88,7 +88,7 @@
                     <a class="waves-effect waves-light btn" onclick="resetCanvas()"><i class="large material-icons right">replay</i>Reset</a>
                 </div>
                 <div class="col m1 offset-m7 s1 offset-s7">
-                    <a class="waves-effect waves-light btn activator red"><i class="large material-icons">live_help</i></a>
+                    <a class="waves-effect waves-light btn activator orange lighten-2"><i class="large material-icons">live_help</i></a>
                 </div>
             </div>
         </div>
@@ -99,7 +99,11 @@
 
             <h3>Développeurs</h3>
             <p>
-                -- Pierre Hostens -- Benoit Grand -- Julien Maupetit -- Aymeric Mivielle --
+                Julien Maupetit <br>
+                Pierre Hosteins <br>
+                Benoit Grand <br>
+                Aymeric Mivielle <br>
+
             </p>
 
             <h3>Description de l'applicatif</h3>
@@ -140,17 +144,15 @@
                         <th>Place</th></h4>
                 </tr>
                 </thead>
-
-                <tr><td>Jquery</td><td>permet d'utiliser les librairies Chart et Bootstrap</td><td>/webroot/js/jquery/</td></tr>
-                <tr><td>Chart (en Bars)</td><td>affiche un graphe en Bars correspondant a chaque chiffre appris en fonction du poids</td><td>/webroot/js/canvas/</td></tr>
-                <tr><td>Boostrap</td><td>un visuel plus agréable pour l'utilisateur</td><td>javascript: /webroot/js/bootstrap/ </br>css: /webroot/css/</td></tr>
-                <tr><td>AngularJS</td><td>permet d'afficher ou cacher les outils</td><td>Lien</td></tr>
+                <tr><td>Materialize</td><td>un visuel plus agréable pour l'utilisateur</td><td>javascript: via CDN </br>css: via CDN</td></tr>
             </table>
 
             <h3>Evolution possible</h3>
 
-            <p>L'enregistrement d'un halo sur les pixels allumés consistant à leur renseigner un poids faible afin d'améliorer le processus de reconnaissance quelque soit la forme du chiffre. La reconnaissance se ferait sur un échantillon plus large de pixels ce qui ferait </p>
-            <p>Rendre paramétrable via l'IHM le nombre de pixels du tableau numérique.</p>
+            <p>Permettre d'enregister les formes, pour pouvoir les charger plus rapidement.</p>
+
+            <p>L'autoapprentissage des nombres.</p>
+
             <p>Ajouter une couche en plus cachée :
                 Enregistrer un chiffre en calculant une suite des pixels allumés à partir d’un pixel choisit.
                 Ainsi, on établit une suite logique des fils allumés (pixels adjacents) en leur attribuant un poids différent à chaque fois en fonction de leur position par rapport au pixel mère.
@@ -159,8 +161,21 @@
             <h3>Feature supplémentaire</h3>
 
             <p>
+                Paramétrage de la taille des pixels, pour avoir plus ou moins de case dans le tableau.
+            </p>
+
+            <p>
+                Paramétrage du taux d'apprentissage, afin de modifier la vitesse d'apprentissage des formes.
+            </p>
+
+            <p>
+                Changement de précision du curseur pour activer également les pixels adjacents, mais avec un poids moindre.
+            </p>
+
+            <p>
                 Un mode supplémentaire dit "LSD" a été rajouté à cette application qui peut être activé d'un clic et qui transforme sensiblement le ressenti de l'IHM de l'application. Epileptique s'abstenir.
             </p>
+
 
         </div>
     </div>

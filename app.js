@@ -87,6 +87,10 @@ function init() {
         PIXEL_SIZE =  sizeGridSlider.value;
         init();
         document.getElementById('sizeGridSlider').innerHTML = sizeGridSlider.value;
+
+        TICKNESS = thicknessSlider.value;
+        thicknessSlider.max = Math.ceil(GRID_WIDTH / 20);
+        thicknessSlider.value = 0;
     };
 
     document.getElementById('sizeGridSlider').innerHTML = sizeGridSlider.value;
