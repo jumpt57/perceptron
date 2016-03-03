@@ -97,24 +97,38 @@
         <div class="card-reveal">
             <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i></span>
 
+            <h3>Développeurs</h3>
+            <p>
+                -- Pierre Hostens -- Benoit Grand -- Julien Maupetit -- Aymeric Mivielle --
+            </p>
+
             <h3>Description de l'applicatif</h3>
             <p>
-                Le perceptron est un réseau de neurone simple.
-                Grâce a la formule <kbd><var> P = P + t * (A – O) * E </var></kbd> nous avons réalisé le perceptron basé sur un apprentissage <i>supervisé</i>.<br>
-                Pour réaliser le perceptron, nous sommes partis d'une base graphique correspondant à une grille de pixels en 3 dimensions:</p>
+                Le perceptron est un réseau de neurone simple destiné à apprendre <i>seul</i> des données précises, ici des chiffres.<br>
+                Grâce a la formule <kbd><var> P' = P + t * (A – O) * E </var></kbd> nous avons réalisé le perceptron basé sur un apprentissage <i>supervisé</i>.<br>
+                <kbd><var>P' le poids corrigé, P le poids, t le taux d'apprentissage, A la valeur attendue, O la valeur obtenue et E l'entrée.</var></kbd><br>
+            </p>
             <p>
+                Pour réaliser le perceptron, nous sommes partis d'une base graphique correspondant à une grille de pixels en 3 dimensions:<br>
                 - axe des ordonnées<br>
                 - axe des abcisses<br>
-                - chiffre à apprendre de 1 à 9 <br/>
+                - le chiffre à apprendre de 1 à 9 <br/>
             <p/>
 
             <p>
                 Chaque pixel contient un poids qui est calculé avec la formule précédemment écrite. Ce poids diffère en fonction du chiffre à faire apprendre.
             </p>
 
+            <p>
+                L'apprentissage du Perceptron se fait via un dessin sur la grille et le boutin Learn. A chaque pression, l'IHM affiche quels sont les chiffres déjà connu par le Perceptron pour cet ensemble de pixels via le champs Output. A chaque pression, on peut donc constater l'apprentissage du Perceptron qui va graduellement éliminé les possibilités pour ne retenir que le chiffre voulu.
+            </p>
+            <p>
+                Cet apprentissage n'est pas immédiat et il faut de nombreuses itération pour véritablement "apprendre" au programme les différents chiffres.
+            </p>
+
             <h3>Rôle des fichiers dans le projet</h3>
 
-            <p>"initialisationAffichageCanvas.js" affiche le canvas représentant la grille numérique.</p>
+            <p>"app.js" affiche le canvas représentant la grille numérique.</p>
             <p>"perceptron.js" permet de créer un reseau de neurone simple prenant en compte une couche d'entrée et de sortie et connectées ensembles.
                 Dans ce fichier se trouve l'algorithme correspondant à l'apprentissage des chiffres de 1 à 9 ainsi que l'algorithme permettant de chercher et reconnaitre ces chiffres grâce a la formule.</p>
 
@@ -135,11 +149,17 @@
 
             <h3>Evolution possible</h3>
 
-            <p>L'enregistrement d'un halo sur les pixels allumés consistant à leur renseigner un poids faible afin d'améliorer le processus de reconnaissance quelque soit la forme du chiffre.</p>
+            <p>L'enregistrement d'un halo sur les pixels allumés consistant à leur renseigner un poids faible afin d'améliorer le processus de reconnaissance quelque soit la forme du chiffre. La reconnaissance se ferait sur un échantillon plus large de pixels ce qui ferait </p>
             <p>Rendre paramétrable via l'IHM le nombre de pixels du tableau numérique.</p>
-            <p>Ajouter une couche en plus caché.
+            <p>Ajouter une couche en plus cachée :
                 Enregistrer un chiffre en calculant une suite des pixels allumés à partir d’un pixel choisit.
                 Ainsi, on établit une suite logique des fils allumés (pixels adjacents) en leur attribuant un poids différent à chaque fois en fonction de leur position par rapport au pixel mère.
+            </p>
+
+            <h3>Feature supplémentaire</h3>
+
+            <p>
+                Un mode supplémentaire dit "LSD" a été rajouté à cette application qui peut être activé d'un clic et qui transforme sensiblement le ressenti de l'IHM de l'application. Epileptique s'abstenir.
             </p>
 
         </div>
